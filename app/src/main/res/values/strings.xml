@@ -13,10 +13,13 @@
     <string name="games_win_in_a_row_text">Racha de juegos ganados: %d</string>
     <string name="player_name_text">Nombre del jugador: %s</string>
     <string name="player_id_text">ID del jugador: %s</string>
+    <string name="player_ranking_text">Rank: %s</string>
 
     <string name="winner_text">WINNER!</string>
     <string name="loser_text">LOSER!</string>
     <string name="tie_text">EMPATE!</string>
     <string name="reset_game">NUEVO JUEGO</string>
-    <string name="achievements_button_text">Ver lista de logros</string>
+    <string name="achievements_button_text">Achievements</string>
+    <string name="leader_board_button_text">Leader Board</string>
+    <string name="sign_out_button_text">SignOut</string>
 </resources>

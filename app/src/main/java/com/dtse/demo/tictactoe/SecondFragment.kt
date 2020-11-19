@@ -1,5 +1,6 @@
 package com.dtse.demo.tictactoe
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +27,23 @@ class SecondFragment : Fragment(), View.OnClickListener {
             "****"
         private const val WIN_FIVE_IN_ROW =
             "****"
+        private const val LEADER_BOARD_ID =
+            "****"
     }
+
+    /*
+    private val playersClient by lazy {
+        Games.getPlayersClient(activity)
+    }
+
+    private val rankingsClient by lazy {
+        Games.getRankingsClient(activity)
+    }
+
+    private val achievementsClient by lazy {
+        Games.getAchievementsClient(activity)
+    }
+     */
 
     private var playerId: String? = null
     private var activePlayer = 1
@@ -35,6 +52,17 @@ class SecondFragment : Fragment(), View.OnClickListener {
     private var btnUsed = 0
     private var winInARow = 0
     private var gamesWon = 0
+
+    private lateinit var hmsAuth: HmsAuth
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            hmsAuth = context as HmsAuth
+        } catch (ex: ClassCastException) {
+            throw ClassCastException("${ex.message} must implement HmsAuth interface")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,13 +77,14 @@ class SecondFragment : Fragment(), View.OnClickListener {
         gamesWon = Preference.gamesWon
 
         initializePlayer()
+        initializePlayerScore()
         initializeViews()
     }
 
     private fun initializePlayer() {
     }
 
-    private fun initializeViews() {
+    private fun initializePlayerScore() {
         textViewGamesWon.text =
             getString(R.string.games_win_text, gamesWon)
         textViewGamesWonInARow.text =
@@ -63,7 +92,9 @@ class SecondFragment : Fragment(), View.OnClickListener {
                 R.string.games_win_in_a_row_text,
                 winInARow
             )
+    }
 
+    private fun initializeViews() {
         btn1.setOnClickListener(this)
         btn2.setOnClickListener(this)
         btn3.setOnClickListener(this)
@@ -78,8 +109,16 @@ class SecondFragment : Fragment(), View.OnClickListener {
             clearBoard()
         }
 
-        buttonAchivementList.setOnClickListener {
+        buttonSignOut.setOnClickListener {
+            hmsAuth.signOut()
+        }
 
+        buttonLeaderBoard.setOnClickListener {
+            showLeadersBoards()
+        }
+
+        buttonAchivementList.setOnClickListener {
+            showAchievementsList()
         }
     }
 
@@ -230,6 +269,7 @@ class SecondFragment : Fragment(), View.OnClickListener {
                 Preference.gamesWon = gamesWon
                 textViewGamesWon.text = getString(R.string.games_win_text, gamesWon)
                 //reviewAchievements()
+                //submitRankingScore(gamesWon)
             } else {
                 Log.i(TAG, "Computer won the game.")
                 txtView.text = getString(R.string.loser_text)
@@ -286,4 +326,10 @@ class SecondFragment : Fragment(), View.OnClickListener {
     //private fun reachAchievement(achievement: Achievement) { }
 
     //private fun reveledAchievement(achievementId: String) {}
+
+    private fun showAchievementsList() {}
+
+    private fun submitRankingScore(score: Int) {}
+
+    private fun showLeadersBoards() {}
 }
